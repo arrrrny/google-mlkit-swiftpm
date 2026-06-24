@@ -16,7 +16,7 @@ fi
 # the upstream MLKit base version.
 if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
   echo "Error: Invalid version format '$VERSION'"
-  echo "Expected semantic versioning format: X.Y.Z[-PRERELEASE] (e.g., 1.2.3, 9.0.0-1)"
+  echo "Expected semantic versioning format: X.Y.Z[-PRERELEASE]"
   exit 1
 fi
 
@@ -47,58 +47,29 @@ if ! $GH_CMD release view "$VERSION" &> /dev/null; then
   exit 1
 fi
 
-# List of XCFramework files to upload
-FRAMEWORKS=(
-  "GoogleToolboxForMac"
-  "MLImage"
-  "MLKitBarcodeScanning"
-  "MLKitCommon"
-  "MLKitFaceDetection"
-  "MLKitVision"
-)
-
-# Resource bundle to upload
-BUNDLE_NAME="GoogleMVFaceDetectorResources.bundle"
-
-# Delete old assets if they exist
-echo "Removing old assets from release..."
-for framework in "${FRAMEWORKS[@]}"; do
-  ASSET_NAME="${framework}.xcframework.zip"
-  if $GH_CMD release view "$VERSION" --json assets --jq ".assets[].name" | grep -q "^${ASSET_NAME}$"; then
-    echo "  Deleting old asset: $ASSET_NAME"
-    $GH_CMD release delete-asset "$VERSION" "$ASSET_NAME" --yes || true
-  fi
-done
-
-# Delete old bundle if it exists
-BUNDLE_ZIP="${BUNDLE_NAME}.zip"
-if $GH_CMD release view "$VERSION" --json assets --jq ".assets[].name" | grep -q "^${BUNDLE_ZIP}$"; then
-  echo "  Deleting old asset: $BUNDLE_ZIP"
-  $GH_CMD release delete-asset "$VERSION" "$BUNDLE_ZIP" --yes || true
-fi
-echo ""
-
-# Upload new assets
-echo "Uploading new XCFramework assets and bundle..."
+# Collect all XCFramework and bundle files
 UPLOAD_FILES=()
-for framework in "${FRAMEWORKS[@]}"; do
-  ASSET_PATH="GoogleMLKit/${framework}.xcframework.zip"
-  if [ ! -f "$ASSET_PATH" ]; then
-    echo "Error: File not found: $ASSET_PATH"
-    exit 1
+
+# Add all xcframework zip files
+for framework in GoogleMLKit/*.xcframework.zip; do
+  if [ -f "$framework" ]; then
+    UPLOAD_FILES+=("$framework")
+    echo "  Prepared: $framework"
   fi
-  UPLOAD_FILES+=("$ASSET_PATH")
-  echo "  Prepared: $ASSET_PATH"
 done
 
-# Add bundle
-BUNDLE_PATH="GoogleMLKit/${BUNDLE_ZIP}"
-if [ ! -f "$BUNDLE_PATH" ]; then
-  echo "Error: File not found: $BUNDLE_PATH"
+# Add all bundle zip files
+for bundle in GoogleMLKit/*.bundle.zip; do
+  if [ -f "$bundle" ]; then
+    UPLOAD_FILES+=("$bundle")
+    echo "  Prepared: $bundle"
+  fi
+done
+
+if [ ${#UPLOAD_FILES[@]} -eq 0 ]; then
+  echo "Error: No XCFramework or bundle files found in GoogleMLKit/ directory"
   exit 1
 fi
-UPLOAD_FILES+=("$BUNDLE_PATH")
-echo "  Prepared: $BUNDLE_PATH"
 
 echo ""
 echo "Uploading ${#UPLOAD_FILES[@]} files to release $VERSION..."

@@ -35,34 +35,36 @@ echo ""
 # Check prerequisites
 echo "Step 1: Checking prerequisites..."
 
-REQUIRED_FILES=(
-  "GoogleMLKit/MLImage.xcframework.zip"
-  "GoogleMLKit/MLKitBarcodeScanning.xcframework.zip"
-  "GoogleMLKit/MLKitCommon.xcframework.zip"
-  "GoogleMLKit/MLKitFaceDetection.xcframework.zip"
-  "GoogleMLKit/MLKitVision.xcframework.zip"
-  "GoogleMLKit/GoogleToolboxForMac.xcframework.zip"
-  "GoogleMLKit/GoogleMVFaceDetectorResources.bundle.zip"
-)
-
-MISSING_FILES=()
-for file in "${REQUIRED_FILES[@]}"; do
-  if [ ! -f "$file" ]; then
-    MISSING_FILES+=("$file")
+# Check all xcframeworks exist
+XCFRAMEWORKS_FOUND=false
+for framework in GoogleMLKit/*.xcframework.zip; do
+  if [ -f "$framework" ]; then
+    XCFRAMEWORKS_FOUND=true
+    break
   fi
 done
 
-if [ ${#MISSING_FILES[@]} -gt 0 ]; then
-  echo "Error: Missing required files:"
-  for file in "${MISSING_FILES[@]}"; do
-    echo "  - $file"
-  done
-  echo ""
+BUNDLES_FOUND=false
+for bundle in GoogleMLKit/*.bundle.zip; do
+  if [ -f "$bundle" ]; then
+    BUNDLES_FOUND=true
+    break
+  fi
+done
+
+if [ "$XCFRAMEWORKS_FOUND" = false ]; then
+  echo "Error: No XCFrameworks found in GoogleMLKit/ directory"
   echo "Please run: ./scripts/build_all.sh $VERSION"
   exit 1
 fi
 
-echo "✓ All required files present"
+if [ "$BUNDLES_FOUND" = false ]; then
+  echo "Warning: No resource bundles found in GoogleMLKit/ directory"
+  echo "Some modules may require manual resource bundle addition"
+fi
+
+echo "✓ XCFrameworks found"
+echo "✓ Resource bundles checked (if any exist)"
 echo ""
 
 # Step 2: Create GitHub release

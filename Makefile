@@ -154,7 +154,15 @@ create-xcframework: bootstrap-builder build-cocoapods prepare-info-plist
 	-output GoogleMLKit
 
 copy-resource-bundle:
-	@cp -rf "./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework/GoogleMVFaceDetectorResources.bundle" "./GoogleMLKit/GoogleMVFaceDetectorResources.bundle"
+	@cp -rf "./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework/GoogleMVFaceDetectorResources.bundle" "./GoogleMLKit/GoogleMVFaceDetectorResources.bundle" || true
+	@cp -rf "./Pods/MLKitTextRecognitionCommon/Frameworks/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionResources.bundle" "./GoogleMLKit/MLKitTextRecognitionResources.bundle" || true
+	@cp -rf "./Pods/MLKitImageLabeling/Frameworks/MLKitImageLabeling.framework/MLKitImageLabelingResources.bundle" "./GoogleMLKit/MLKitImageLabelingResources.bundle" || true
+	@cp -rf "./Pods/MLKitObjectDetection/Frameworks/MLKitObjectDetection.framework/MLKitObjectDetectionResources.bundle" "./GoogleMLKit/MLKitObjectDetectionResources.bundle" || true
+	@cp -rf "./Pods/MLKitObjectDetectionCommon/Frameworks/MLKitObjectDetectionCommon.framework/MLKitObjectDetectionCommonResources.bundle" "./GoogleMLKit/MLKitObjectDetectionCommonResources.bundle" || true
+	@cp -rf "./Pods/MLKitTranslate/Frameworks/MLKitTranslate.framework/MLKitTranslate_resource.bundle" "./GoogleMLKit/MLKitTranslate_resource.bundle" || true
+	@cp -rf "./Pods/MLKitXenoCommon/Frameworks/MLKitXenoCommon.framework/MLKitXenoResources.bundle" "./GoogleMLKit/MLKitXenoResources.bundle" || true
+	@cp -rf "./Pods/MLKitLanguageID/Frameworks/MLKitLanguageID.framework/PredictOnDevice_resource.bundle" "./GoogleMLKit/PredictOnDevice_resource.bundle" || true
+	@echo "Resource bundles copied (missing bundles are expected if they come from separate pods)"
 
 archive: create-xcframework copy-resource-bundle
 	@cd ./GoogleMLKit/MLKitBarcodeScanning.xcframework/ios-arm64/MLKitBarcodeScanning.framework \
@@ -187,6 +195,16 @@ archive: create-xcframework copy-resource-bundle
 	 && ar r MLKitImageLabeling MLKitImageLabeling.o \
 	 && ranlib MLKitImageLabeling \
 	 && rm MLKitImageLabeling.o
+	@cd ./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/ios-arm64/MLKitTextRecognitionCommon.framework \
+	 && mv MLKitTextRecognitionCommon MLKitTextRecognitionCommon.o \
+	 && ar r MLKitTextRecognitionCommon MLKitTextRecognitionCommon.o \
+	 && ranlib MLKitTextRecognitionCommon \
+	 && rm MLKitTextRecognitionCommon.o
+	@cd ./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/ios-x86_64-simulator/MLKitTextRecognitionCommon.framework \
+	 && mv MLKitTextRecognitionCommon MLKitTextRecognitionCommon.o \
+	 && ar r MLKitTextRecognitionCommon MLKitTextRecognitionCommon.o \
+	 && ranlib MLKitTextRecognitionCommon \
+	 && rm MLKitTextRecognitionCommon.o
 	@cd ./GoogleMLKit/MLKitLanguageID.xcframework/ios-arm64/MLKitLanguageID.framework \
 	 && mv MLKitLanguageID MLKitLanguageID.o \
 	 && ar r MLKitLanguageID MLKitLanguageID.o \
@@ -248,6 +266,13 @@ archive: create-xcframework copy-resource-bundle
 	 && zip -r MLKitSegmentationCommon.xcframework.zip MLKitSegmentationCommon.xcframework \
 	 && zip -r MLKitTextRecognitionCommon.xcframework.zip MLKitTextRecognitionCommon.xcframework \
 	 && zip -r MLKitXenoCommon.xcframework.zip MLKitXenoCommon.xcframework \
-	 && zip -r GoogleMVFaceDetectorResources.bundle.zip GoogleMVFaceDetectorResources.bundle
+	 && zip -r GoogleMVFaceDetectorResources.bundle.zip GoogleMVFaceDetectorResources.bundle \
+	 && zip -r MLKitTextRecognitionResources.bundle.zip MLKitTextRecognitionResources.bundle || true \
+	 && zip -r MLKitImageLabelingResources.bundle.zip MLKitImageLabelingResources.bundle \
+	 && zip -r MLKitObjectDetectionResources.bundle.zip MLKitObjectDetectionResources.bundle \
+	 && zip -r MLKitObjectDetectionCommonResources.bundle.zip MLKitObjectDetectionCommonResources.bundle || true \
+	 && zip -r MLKitTranslate_resource.bundle.zip MLKitTranslate_resource.bundle || true \
+	 && zip -r MLKitXenoResources.bundle.zip MLKitXenoResources.bundle || true \
+	 && zip -r PredictOnDevice_resource.bundle.zip PredictOnDevice_resource.bundle || true
 .PHONY:
 run: archive

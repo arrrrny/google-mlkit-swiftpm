@@ -13,6 +13,7 @@ mkdir -p "${DEST_DIR}"
 # Download and extract bundles
 BUNDLES=(
   "GoogleMVFaceDetectorResources.bundle"
+  "MLKitTextRecognitionResources.bundle"
   "MLKitImageLabelingResources.bundle"
   "MLKitObjectDetectionCommonResources.bundle"
   "MLKitObjectDetectionResources.bundle"

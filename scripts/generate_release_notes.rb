@@ -96,7 +96,7 @@ def generate_release_notes(version, pod_changes_file = nil)
 
   notes << "## Installation"
   notes << ""
-  notes << "See [README.md](https://github.com/d-date/google-mlkit-swiftpm/blob/main/README.md) for installation instructions."
+  notes << "See [README.md](https://github.com/arrrrny/google-mlkit-swiftpm/blob/main/README.md) for installation instructions."
   notes << ""
   notes << "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
 

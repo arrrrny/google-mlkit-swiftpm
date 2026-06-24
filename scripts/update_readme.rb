@@ -18,17 +18,17 @@ def update_readme(new_version)
   original_content = content.dup
 
   # Update Installation example (.package line)
-  # Example: .package(url: "https://github.com/d-date/google-mlkit-swiftpm", from: "5.0.0")
+  # Example: .package(url: "https://github.com/arrrrny/google-mlkit-swiftpm", from: "5.0.0")
   content = content.gsub(
-    /\.package\(url: "https:\/\/github\.com\/d-date\/google-mlkit-swiftpm", from: "[^"]+"\)/,
-    ".package(url: \"https://github.com/d-date/google-mlkit-swiftpm\", from: \"#{new_version}\")"
+    /\.package\(url: "https:\/\/github\.com\/arrrrny\/google-mlkit-swiftpm", from: "[^"]+"\)/,
+    ".package(url: \"https://github.com/arrrrny/google-mlkit-swiftpm\", from: \"#{new_version}\")"
   )
 
   # Update bundle download link
-  # Example: Download `GoogleMVFaceDetectorResources.bundle` from [Release](https://github.com/d-date/google-mlkit-swiftpm/releases/download/3.2.0/GoogleMVFaceDetectorResources.bundle.zip)
+  # Example: Download `GoogleMVFaceDetectorResources.bundle` from [Release](https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/3.2.0/GoogleMVFaceDetectorResources.bundle.zip)
   content = content.gsub(
-    %r{https://github\.com/d-date/google-mlkit-swiftpm/releases/download/[^/]+/GoogleMVFaceDetectorResources\.bundle\.zip},
-    "https://github.com/d-date/google-mlkit-swiftpm/releases/download/#{new_version}/GoogleMVFaceDetectorResources.bundle.zip"
+    %r{https://github\.com/arrrrny/google-mlkit-swiftpm/releases/download/[^/]+/GoogleMVFaceDetectorResources\.bundle\.zip},
+    "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/#{new_version}/GoogleMVFaceDetectorResources.bundle.zip"
   )
 
   # Check if any changes were made
@@ -45,7 +45,7 @@ def update_readme(new_version)
 
   # Show what was updated
   puts "\nUpdated sections:"
-  if content.include?(".package(url: \"https://github.com/d-date/google-mlkit-swiftpm\", from: \"#{new_version}\")")
+  if content.include?(".package(url: \"https://github.com/arrrrny/google-mlkit-swiftpm\", from: \"#{new_version}\")")
     puts "  - Installation example"
   end
   if content.include?("releases/download/#{new_version}/GoogleMVFaceDetectorResources.bundle.zip")

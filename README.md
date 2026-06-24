@@ -15,14 +15,14 @@ Add the package dependency to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/d-date/google-mlkit-swiftpm", from: "9.0.0")
+    .package(url: "https://github.com/arrrrny/google-mlkit-swiftpm", from: "9.0.0-1")
 ]
 ```
 
 > **Submitting to App Store?** The `9.0.0` zips embed Info.plist values like `1.0.0-beta16` for a few internal frameworks, which App Store Connect rejects. Pin the wrapper-only repackage instead:
 >
 > ```swift
-> .package(url: "https://github.com/d-date/google-mlkit-swiftpm", exact: "9.0.0-1")
+> .package(url: "https://github.com/arrrrny/google-mlkit-swiftpm", exact: "9.0.0-1")
 > ```
 >
 > `9.0.0-1` is a SemVer pre-release of the same upstream MLKit `9.0.0` build with the Info.plist regression fixed. SwiftPM's `from: "9.0.0"` excludes pre-release tags, so existing consumers stay on `9.0.0`; AppStore-blocked consumers opt in via `exact:`.
@@ -63,7 +63,7 @@ Some ML Kit modules require resource bundles. Currently:
 #### Face Detection
 The `MLKitFaceDetection` module requires `GoogleMVFaceDetectorResources.bundle`. Since bundles can't be automatically included via Swift Package Manager, you need to manually add it to your project.
 
-Download `GoogleMVFaceDetectorResources.bundle` from [Release](https://github.com/d-date/google-mlkit-swiftpm/releases/download/9.0.0/GoogleMVFaceDetectorResources.bundle.zip) and add it to your Xcode project, ensuring it's included in your build target.
+Download `GoogleMVFaceDetectorResources.bundle` from [Release](https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/GoogleMVFaceDetectorResources.bundle.zip) and add it to your Xcode project, ensuring it's included in your build target.
 
 **Note**: Other modules (Text Recognition, Pose Detection, Object Detection, Selfie Segmentation, Translation) may also require resource bundles or downloaded models at runtime. Check the official [ML Kit documentation](https://developers.google.com/ml-kit) for specific requirements.
 

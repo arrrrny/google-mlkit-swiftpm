@@ -57,7 +57,7 @@ The Makefile is the single source of truth for the build. Targets form a 6-stage
 
 ### Module surface in `Package.swift`
 
-- 17 `.library` products and ~30 `.binaryTarget` entries. Each binary target points at `https://github.com/d-date/google-mlkit-swiftpm/releases/download/<version>/<Name>.xcframework.zip` with a SHA256 checksum.
+- 17 `.library` products and ~30 `.binaryTarget` entries. Each binary target points at `https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/<version>/<Name>.xcframework.zip` with a SHA256 checksum.
 - One real `.target` named `Common` re-exports `MLKitCommon` and pulls in non-binary Google SwiftPM dependencies (GoogleUtilities, gtm-session-fetcher, GoogleDataTransport, nanopb, promises). Every public library composes its binary target with `Common`, so consumers don't have to wire these themselves.
 - A block of commented-out `.binaryTarget(name:path:)` entries near the top is intentionally kept for local debugging — uncomment them (and comment the URL-based ones) to point SwiftPM at `GoogleMLKit/*.xcframework` directly.
 

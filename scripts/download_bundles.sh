@@ -25,7 +25,7 @@ BUNDLES=(
 for BUNDLE in "${BUNDLES[@]}"; do
   echo "Downloading ${BUNDLE}..."
   curl -L -o "/tmp/${BUNDLE}.zip" \
-    "https://github.com/d-date/google-mlkit-swiftpm/releases/download/${VERSION}/${BUNDLE}.zip"
+    "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/${VERSION}/${BUNDLE}.zip"
 
   echo "Extracting ${BUNDLE}..."
   unzip -q -o "/tmp/${BUNDLE}.zip" -d "${DEST_DIR}"

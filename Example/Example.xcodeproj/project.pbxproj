@@ -323,7 +323,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.d-date.mlkit-swiftpm-example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arrrrny.mlkit-swiftpm-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -372,7 +372,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.d-date.mlkit-swiftpm-example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arrrrny.mlkit-swiftpm-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

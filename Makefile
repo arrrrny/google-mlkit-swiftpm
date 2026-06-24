@@ -154,15 +154,26 @@ create-xcframework: bootstrap-builder build-cocoapods prepare-info-plist
 	-output GoogleMLKit
 
 copy-resource-bundle:
-	@cp -rf "./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework/GoogleMVFaceDetectorResources.bundle" "./GoogleMLKit/GoogleMVFaceDetectorResources.bundle" || true
-	@cp -rf "./Pods/MLKitTextRecognitionCommon/Frameworks/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionResources.bundle" "./GoogleMLKit/MLKitTextRecognitionResources.bundle" || true
-	@cp -rf "./Pods/MLKitImageLabeling/Frameworks/MLKitImageLabeling.framework/MLKitImageLabelingResources.bundle" "./GoogleMLKit/MLKitImageLabelingResources.bundle" || true
-	@cp -rf "./Pods/MLKitObjectDetection/Frameworks/MLKitObjectDetection.framework/MLKitObjectDetectionResources.bundle" "./GoogleMLKit/MLKitObjectDetectionResources.bundle" || true
-	@cp -rf "./Pods/MLKitObjectDetectionCommon/Frameworks/MLKitObjectDetectionCommon.framework/MLKitObjectDetectionCommonResources.bundle" "./GoogleMLKit/MLKitObjectDetectionCommonResources.bundle" || true
-	@cp -rf "./Pods/MLKitTranslate/Frameworks/MLKitTranslate.framework/MLKitTranslate_resource.bundle" "./GoogleMLKit/MLKitTranslate_resource.bundle" || true
-	@cp -rf "./Pods/MLKitXenoCommon/Frameworks/MLKitXenoCommon.framework/MLKitXenoResources.bundle" "./GoogleMLKit/MLKitXenoResources.bundle" || true
-	@cp -rf "./Pods/MLKitLanguageID/Frameworks/MLKitLanguageID.framework/PredictOnDevice_resource.bundle" "./GoogleMLKit/PredictOnDevice_resource.bundle" || true
-	@echo "Resource bundles copied (missing bundles are expected if they come from separate pods)"
+		@cp -rf "./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework/GoogleMVFaceDetectorResources.bundle" "./GoogleMLKit/GoogleMVFaceDetectorResources.bundle" || true
+		@cp -rf "./Pods/MLKitImageLabeling/Frameworks/MLKitImageLabeling.framework/MLKitImageLabelingResources.bundle" "./GoogleMLKit/MLKitImageLabelingResources.bundle" || true
+		@cp -rf "./Pods/MLKitObjectDetection/Frameworks/MLKitObjectDetection.framework/MLKitObjectDetectionResources.bundle" "./GoogleMLKit/MLKitObjectDetectionResources.bundle" || true
+		@cp -rf "./Pods/MLKitObjectDetectionCommon/Frameworks/MLKitObjectDetectionCommon.framework/MLKitObjectDetectionCommonResources.bundle" "./GoogleMLKit/MLKitObjectDetectionCommonResources.bundle" || true
+		@cp -rf "./Pods/MLKitTranslate/Frameworks/MLKitTranslate.framework/MLKitTranslate_resource.bundle" "./GoogleMLKit/MLKitTranslate_resource.bundle" || true
+		@cp -rf "./Pods/MLKitXenoCommon/Frameworks/MLKitXenoCommon.framework/MLKitXenoResources.bundle" "./GoogleMLKit/MLKitXenoResources.bundle" || true
+		@cp -rf "./Pods/MLKitLanguageID/Frameworks/MLKitLanguageID.framework/PredictOnDevice_resource.bundle" "./GoogleMLKit/PredictOnDevice_resource.bundle" || true
+		@echo "Copying resource bundles from Pod resources directories..."
+		@for pod_res in MLKitTextRecognition:LatinOCRResources:MLKitTextRecognitionResources MLKitTextRecognitionChinese:ChineseOCRResources:MLKitTextRecognitionChineseResources MLKitTextRecognitionDevanagari:DevanagariOCRResources:MLKitTextRecognitionDevanagariResources MLKitTextRecognitionJapanese:JapaneseOCRResources:MLKitTextRecognitionJapaneseResources MLKitTextRecognitionKorean:KoreanOCRResources:MLKitTextRecognitionKoreanResources MLKitSmartReply:PredictOnDeviceResource:PredictOnDevice_resource; do \
+		  pod=$$(echo $$pod_res | cut -d: -f1); \
+		  src_dir=$$(echo $$pod_res | cut -d: -f2); \
+		  bundle=$$(echo $$pod_res | cut -d: -f3); \
+		  if [ -d "./Pods/$$pod/Resources/$$src_dir" ]; then \
+		    rm -rf "./GoogleMLKit/$$bundle.bundle"; \
+		    mkdir -p "./GoogleMLKit/$$bundle.bundle"; \
+		    cp -rf "./Pods/$$pod/Resources/$$src_dir/"* "./GoogleMLKit/$$bundle.bundle/"; \
+		    echo "  Created $$bundle.bundle from $$pod/Resources/$$src_dir"; \
+		  fi; \
+		done
+		@echo "Resource bundles copied (missing bundles are expected if they come from separate pods)"
 
 archive: create-xcframework copy-resource-bundle
 	@cd ./GoogleMLKit/MLKitBarcodeScanning.xcframework/ios-arm64/MLKitBarcodeScanning.framework \
@@ -235,6 +246,24 @@ archive: create-xcframework copy-resource-bundle
 	 && ar r MLKitSmartReply MLKitSmartReply.o \
 	 && ranlib MLKitSmartReply \
 	 && rm MLKitSmartReply.o
+	@echo "Embedding resource bundles into xcframeworks..."
+	@for arch in ios-arm64 ios-x86_64-simulator; do \
+	  if [ -d "./GoogleMLKit/MLKitTextRecognition.xcframework/$$arch/MLKitTextRecognition.framework" ]; then \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionResources.bundle" "./GoogleMLKit/MLKitTextRecognition.xcframework/$$arch/MLKitTextRecognition.framework/" 2>/dev/null || true; \
+	  fi; \
+	  if [ -d "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework" ]; then \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionResources.bundle" "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework/" 2>/dev/null || true; \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionChineseResources.bundle" "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework/" 2>/dev/null || true; \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionDevanagariResources.bundle" "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework/" 2>/dev/null || true; \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionJapaneseResources.bundle" "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework/" 2>/dev/null || true; \
+	    cp -rf "./GoogleMLKit/MLKitTextRecognitionKoreanResources.bundle" "./GoogleMLKit/MLKitTextRecognitionCommon.xcframework/$$arch/MLKitTextRecognitionCommon.framework/" 2>/dev/null || true; \
+	  fi; \
+	  if [ -d "./GoogleMLKit/MLKitSmartReply.xcframework/$$arch/MLKitSmartReply.framework" ]; then \
+	    cp -rf "./GoogleMLKit/PredictOnDevice_resource.bundle" "./GoogleMLKit/MLKitSmartReply.xcframework/$$arch/MLKitSmartReply.framework/" 2>/dev/null || true; \
+	    cp -rf "./GoogleMLKit/PredictOnDevice_resource.bundle" "./GoogleMLKit/MLKitLanguageID.xcframework/$$arch/MLKitLanguageID.framework/" 2>/dev/null || true; \
+	  fi; \
+	done
+	@echo "Resource bundles embedded into xcframeworks"
 	@cd ./GoogleMLKit \
 	 && zip -r MLKitBarcodeScanning.xcframework.zip MLKitBarcodeScanning.xcframework \
 	 && zip -r MLKitFaceDetection.xcframework.zip MLKitFaceDetection.xcframework \

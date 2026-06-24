@@ -137,6 +137,9 @@
 				Base,
 			);
 			mainGroup = D55A93372899396100177BD8;
+			packageReferences = (
+				166DAAEA2FEC35140056D715 /* XCLocalSwiftPackageReference "Package" */,
+			);
 			productRefGroup = D55A93412899396100177BD8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -406,6 +409,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		166DAAEA2FEC35140056D715 /* XCLocalSwiftPackageReference "Package" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		D5F799252EEE7D380092B26F /* Camera */ = {

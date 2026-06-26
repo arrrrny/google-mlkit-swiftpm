@@ -35,6 +35,7 @@
 				MLKitImageLabelingResources.bundle,
 				MLKitObjectDetectionCommonResources.bundle,
 				MLKitObjectDetectionResources.bundle,
+				MLKitTextRecognitionResources.bundle,
 				MLKitTranslate_resource.bundle,
 				MLKitXenoResources.bundle,
 				PredictOnDevice_resource.bundle,

@@ -185,7 +185,7 @@ let package = Package(
     .binaryTarget(
       name: "MLKitTextRecognitionCommon",
       url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitTextRecognitionCommon.xcframework.zip",
-      checksum: "0ca7854b9923728ff961bc187f9e88fee36c58e9c9c46153241f2d911bb3d03a"),
+      checksum: "d2cb4d5cea1f5a6c1b525384e11360aa8eebc25e7dd96b8ee41e9dc4e1307a1d"),
     .binaryTarget(
       name: "MLKitXenoCommon",
       url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitXenoCommon.xcframework.zip",

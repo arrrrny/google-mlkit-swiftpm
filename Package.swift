@@ -66,71 +66,6 @@ let package = Package(
     .package(url: "https://github.com/firebase/nanopb.git", exact: "2.30910.0"),
   ],
   targets: [
-    // For debugging
-    // .binaryTarget(
-    //   name: "MLImage",
-    //   path: "GoogleMLKit/MLImage.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitBarcodeScanning",
-    //   path: "GoogleMLKit/MLKitBarcodeScanning.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitCommon",
-    //   path: "GoogleMLKit/MLKitCommon.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitFaceDetection",
-    //   path: "GoogleMLKit/MLKitFaceDetection.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitVision",
-    //   path: "GoogleMLKit/MLKitVision.xcframework"),
-    // .binaryTarget(
-    //   name: "GoogleToolboxForMac",
-    //   path: "GoogleMLKit/GoogleToolboxForMac.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTextRecognition",
-    //   path: "GoogleMLKit/MLKitTextRecognition.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTextRecognitionChinese",
-    //   path: "GoogleMLKit/MLKitTextRecognitionChinese.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTextRecognitionDevanagari",
-    //   path: "GoogleMLKit/MLKitTextRecognitionDevanagari.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTextRecognitionJapanese",
-    //   path: "GoogleMLKit/MLKitTextRecognitionJapanese.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTextRecognitionKorean",
-    //   path: "GoogleMLKit/MLKitTextRecognitionKorean.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitImageLabeling",
-    //   path: "GoogleMLKit/MLKitImageLabeling.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitImageLabelingCustom",
-    //   path: "GoogleMLKit/MLKitImageLabelingCustom.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitObjectDetection",
-    //   path: "GoogleMLKit/MLKitObjectDetection.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitObjectDetectionCustom",
-    //   path: "GoogleMLKit/MLKitObjectDetectionCustom.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitPoseDetection",
-    //   path: "GoogleMLKit/MLKitPoseDetection.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitPoseDetectionAccurate",
-    //   path: "GoogleMLKit/MLKitPoseDetectionAccurate.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitSegmentationSelfie",
-    //   path: "GoogleMLKit/MLKitSegmentationSelfie.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitLanguageID",
-    //   path: "GoogleMLKit/MLKitLanguageID.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitTranslate",
-    //   path: "GoogleMLKit/MLKitTranslate.xcframework"),
-    // .binaryTarget(
-    //   name: "MLKitSmartReply",
-    //   path: "GoogleMLKit/MLKitSmartReply.xcframework"),
-
     .binaryTarget(
       name: "MLImage",
       url: "https://github.com/d-date/google-mlkit-swiftpm/releases/download/9.0.0-1/MLImage.xcframework.zip",
@@ -237,8 +172,8 @@ let package = Package(
       checksum: "38ba81503e8db531931e5ca0e0694aa86108ff056faca403bed35854f53cc65b"),
     .binaryTarget(
       name: "MLKitTextRecognitionCommon",
-      url: "https://github.com/d-date/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitTextRecognitionCommon.xcframework.zip",
-      checksum: "9b6cbfd695e5458e5ccab905d2c6a641cd29fe60a6ec4fd8acb62ef9b8ac91e7"),
+      url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitTextRecognitionCommon.xcframework.zip",
+      checksum: "0ca7854b9923728ff961bc187f9e88fee36c58e9c9c46153241f2d911bb3d03a"),
     .binaryTarget(
       name: "MLKitXenoCommon",
       url: "https://github.com/d-date/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitXenoCommon.xcframework.zip",

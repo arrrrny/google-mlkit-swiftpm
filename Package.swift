@@ -171,18 +171,6 @@ let package = Package(
       url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitImageLabelingCommon.xcframework.zip",
       checksum: "03cd40ff3b2fe0e88b6c3bf9267f74b24bc650ea9b6eac35ea3dfecd27773520"),
     .binaryTarget(
-      name: "MLKitObjectDetectionCommon",
-      url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitObjectDetectionCommon.xcframework.zip",
-      checksum: "a219b6169148ef66fc4c92457aee2f688e5dca83543ed7858ac987ba4386eea9"),
-    .binaryTarget(
-      name: "MLKitPoseDetectionCommon",
-      url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitPoseDetectionCommon.xcframework.zip",
-      checksum: "53af32663e2336c5edb59292ee46667196e9dbfa193d59ece643a46d9ffc1b78"),
-    .binaryTarget(
-      name: "MLKitSegmentationCommon",
-      url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitSegmentationCommon.xcframework.zip",
-      checksum: "38ba81503e8db531931e5ca0e0694aa86108ff056faca403bed35854f53cc65b"),
-    .binaryTarget(
       name: "MLKitTextRecognitionCommon",
       url: "https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitTextRecognitionCommon.xcframework.zip",
       checksum: "d2cb4d5cea1f5a6c1b525384e11360aa8eebc25e7dd96b8ee41e9dc4e1307a1d"),

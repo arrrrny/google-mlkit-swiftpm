@@ -41,16 +41,17 @@ def verify_xcframeworks
     end
   end
 
-  # Check for bundles (some may be optional if model is embedded in framework)
+  # Check for bundles (some may be optional if model is embedded in framework).
+  # Names match the assets published on the release: OCR bundles ship as
+  # LatinOCRResources / ChineseOCRResources / DevanagariOCRResources /
+  # JapaneseOCRResources / KoreanOCRResources.
   bundles = [
     'GoogleMVFaceDetectorResources.bundle.zip',
-    'MLKitTextRecognitionResources.bundle.zip',  # Optional - model embedded in MLKitTextRecognitionCommon framework
-    'MLKitImageLabelingResources.bundle.zip',
-    'MLKitObjectDetectionResources.bundle.zip',
-    'MLKitObjectDetectionCommonResources.bundle.zip',  # Optional
-    'MLKitTranslate_resource.bundle.zip',
-    'MLKitXenoResources.bundle.zip',
-    'PredictOnDevice_resource.bundle.zip'
+    'LatinOCRResources.bundle.zip',  # Optional - model embedded in MLKitTextRecognitionCommon framework
+    'ChineseOCRResources.bundle.zip',  # Optional
+    'DevanagariOCRResources.bundle.zip',  # Optional
+    'JapaneseOCRResources.bundle.zip',  # Optional
+    'KoreanOCRResources.bundle.zip'  # Optional
   ]
 
   bundles_missing = []

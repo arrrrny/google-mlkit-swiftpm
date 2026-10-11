@@ -260,6 +260,8 @@ archive: create-xcframework copy-resource-bundle
 	  fi; \
 	  if [ -d "./GoogleMLKit/MLKitSmartReply.xcframework/$$arch/MLKitSmartReply.framework" ]; then \
 	    cp -rf "./GoogleMLKit/PredictOnDevice_resource.bundle" "./GoogleMLKit/MLKitSmartReply.xcframework/$$arch/MLKitSmartReply.framework/" 2>/dev/null || true; \
+	  fi; \
+	  if [ -d "./GoogleMLKit/MLKitLanguageID.xcframework/$$arch/MLKitLanguageID.framework" ]; then \
 	    cp -rf "./GoogleMLKit/PredictOnDevice_resource.bundle" "./GoogleMLKit/MLKitLanguageID.xcframework/$$arch/MLKitLanguageID.framework/" 2>/dev/null || true; \
 	  fi; \
 	done
@@ -294,14 +296,14 @@ archive: create-xcframework copy-resource-bundle
 	 && zip -r MLKitPoseDetectionCommon.xcframework.zip MLKitPoseDetectionCommon.xcframework \
 	 && zip -r MLKitSegmentationCommon.xcframework.zip MLKitSegmentationCommon.xcframework \
 	 && zip -r MLKitTextRecognitionCommon.xcframework.zip MLKitTextRecognitionCommon.xcframework \
-	 && zip -r MLKitXenoCommon.xcframework.zip MLKitXenoCommon.xcframework \
-	 && zip -r GoogleMVFaceDetectorResources.bundle.zip GoogleMVFaceDetectorResources.bundle \
-	 && zip -r MLKitTextRecognitionResources.bundle.zip MLKitTextRecognitionResources.bundle || true \
-	 && zip -r MLKitImageLabelingResources.bundle.zip MLKitImageLabelingResources.bundle \
-	 && zip -r MLKitObjectDetectionResources.bundle.zip MLKitObjectDetectionResources.bundle \
-	 && zip -r MLKitObjectDetectionCommonResources.bundle.zip MLKitObjectDetectionCommonResources.bundle || true \
-	 && zip -r MLKitTranslate_resource.bundle.zip MLKitTranslate_resource.bundle || true \
-	 && zip -r MLKitXenoResources.bundle.zip MLKitXenoResources.bundle || true \
-	 && zip -r PredictOnDevice_resource.bundle.zip PredictOnDevice_resource.bundle || true
+	 && zip -r MLKitXenoCommon.xcframework.zip MLKitXenoCommon.xcframework
+	@if [ -f ./GoogleMLKit/GoogleMVFaceDetectorResources.bundle ]; then cd ./GoogleMLKit && zip -r GoogleMVFaceDetectorResources.bundle.zip GoogleMVFaceDetectorResources.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitTextRecognitionResources.bundle ]; then cd ./GoogleMLKit && zip -r MLKitTextRecognitionResources.bundle.zip MLKitTextRecognitionResources.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitImageLabelingResources.bundle ]; then cd ./GoogleMLKit && zip -r MLKitImageLabelingResources.bundle.zip MLKitImageLabelingResources.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitObjectDetectionResources.bundle ]; then cd ./GoogleMLKit && zip -r MLKitObjectDetectionResources.bundle.zip MLKitObjectDetectionResources.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitObjectDetectionCommonResources.bundle ]; then cd ./GoogleMLKit && zip -r MLKitObjectDetectionCommonResources.bundle.zip MLKitObjectDetectionCommonResources.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitTranslate_resource.bundle ]; then cd ./GoogleMLKit && zip -r MLKitTranslate_resource.bundle.zip MLKitTranslate_resource.bundle; fi
+	@if [ -f ./GoogleMLKit/MLKitXenoResources.bundle ]; then cd ./GoogleMLKit && zip -r MLKitXenoResources.bundle.zip MLKitXenoResources.bundle; fi
+	@if [ -f ./GoogleMLKit/PredictOnDevice_resource.bundle ]; then cd ./GoogleMLKit && zip -r PredictOnDevice_resource.bundle.zip PredictOnDevice_resource.bundle; fi
 .PHONY:
 run: archive

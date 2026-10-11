@@ -71,6 +71,28 @@ if [ ${#UPLOAD_FILES[@]} -eq 0 ]; then
   exit 1
 fi
 
+# Prune stale release assets before uploading. --clobber only overwrites
+# same-named uploads, so an asset whose name stops being produced stays
+# downloadable forever (exactly the bundle-rename case) and hides stale-checksum
+# release state. Delete any live asset not present in this upload set.
+echo "Pruning stale release assets..."
+UPLOAD_NAMES=$(for f in "${UPLOAD_FILES[@]}"; do basename "$f"; done)
+STALE_ASSETS=()
+while IFS= read -r asset; do
+  [ -z "$asset" ] && continue
+  if ! grep -qxF "$asset" <<< "$UPLOAD_NAMES"; then
+    STALE_ASSETS+=("$asset")
+  fi
+done < <($GH_CMD release view "$VERSION" --json assets --jq '.assets[].name')
+
+if [ ${#STALE_ASSETS[@]} -eq 0 ]; then
+  echo "  No stale assets to remove"
+else
+  echo "  Removing stale assets: ${STALE_ASSETS[*]}"
+  $GH_CMD release delete-asset "$VERSION" "${STALE_ASSETS[@]}" --yes || \
+    echo "  Warning: failed to remove some stale assets"
+fi
+
 echo ""
 echo "Uploading ${#UPLOAD_FILES[@]} files to release $VERSION..."
 $GH_CMD release upload "$VERSION" "${UPLOAD_FILES[@]}" --clobber

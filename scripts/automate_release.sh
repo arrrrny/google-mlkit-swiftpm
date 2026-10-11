@@ -35,35 +35,31 @@ echo ""
 # Check prerequisites
 echo "Step 1: Checking prerequisites..."
 
-# Check all xcframeworks exist
-XCFRAMEWORKS_FOUND=false
-for framework in GoogleMLKit/*.xcframework.zip; do
-  if [ -f "$framework" ]; then
-    XCFRAMEWORKS_FOUND=true
-    break
-  fi
-done
+# Check that the build produced one xcframework zip per binary target pinned in
+# Package.swift — "any one zip exists" let a single-framework build pass Step 1
+# and ship an incomplete release. Derive the expected count from Package.swift
+# so the check cannot drift from the manifest.
+XCFRAMEWORK_COUNT=$(find GoogleMLKit -maxdepth 1 -name '*.xcframework.zip' 2>/dev/null | wc -l | tr -d ' ')
+TARGET_COUNT=$(grep -c '\.binaryTarget(' Package.swift || true)
 
-BUNDLES_FOUND=false
-for bundle in GoogleMLKit/*.bundle.zip; do
-  if [ -f "$bundle" ]; then
-    BUNDLES_FOUND=true
-    break
-  fi
-done
+if [ "$TARGET_COUNT" -eq 0 ]; then
+  echo "Error: Could not count .binaryTarget entries in Package.swift"
+  exit 1
+fi
 
-if [ "$XCFRAMEWORKS_FOUND" = false ]; then
-  echo "Error: No XCFrameworks found in GoogleMLKit/ directory"
+if [ "$XCFRAMEWORK_COUNT" -lt "$TARGET_COUNT" ]; then
+  echo "Error: Found ${XCFRAMEWORK_COUNT} XCFramework zips in GoogleMLKit/, but Package.swift pins ${TARGET_COUNT} binary targets"
   echo "Please run: ./scripts/build_all.sh $VERSION"
   exit 1
 fi
 
-if [ "$BUNDLES_FOUND" = false ]; then
+BUNDLE_COUNT=$(find GoogleMLKit -maxdepth 1 -name '*.bundle.zip' 2>/dev/null | wc -l | tr -d ' ')
+if [ "$BUNDLE_COUNT" -eq 0 ]; then
   echo "Warning: No resource bundles found in GoogleMLKit/ directory"
   echo "Some modules may require manual resource bundle addition"
 fi
 
-echo "✓ XCFrameworks found"
+echo "✓ XCFrameworks found (${XCFRAMEWORK_COUNT}/${TARGET_COUNT} binary targets)"
 echo "✓ Resource bundles checked (if any exist)"
 echo ""
 

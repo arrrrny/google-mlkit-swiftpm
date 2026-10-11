@@ -64,7 +64,7 @@ Some ML Kit modules require resource bundles. Since bundles can't be automatical
 
 The `MLKitTextRecognition` module requires `MLKitTextRecognitionResources.bundle` containing TensorFlow Lite models for Latin text recognition.
 
-Download `MLKitTextRecognitionResources.bundle` from [Release](https://github.com/arrrrny/google-mlkit-swiftpm/releases/download/9.0.0-1/MLKitTextRecognitionResources.bundle.zip) and add it to your Xcode project, ensuring it's included in your build target.
+Download `MLKitTextRecognitionResources.bundle` from the copy committed in this repo at [`Example/Example/Resources/Bundles/`](Example/Example/Resources/Bundles/) and add it to your Xcode project, ensuring it's included in your build target. (The release publishes the same Latin bundle under the name `LatinOCRResources.bundle.zip` — the bundle itself must be named `MLKitTextRecognitionResources.bundle` at runtime.)
 
 **Note**: The 58MB model data is already embedded in `MLKitTextRecognitionCommon.xcframework`. The resource bundle (565KB) contains additional TensorFlow Lite configuration files required at runtime.
 

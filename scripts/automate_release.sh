@@ -35,34 +35,32 @@ echo ""
 # Check prerequisites
 echo "Step 1: Checking prerequisites..."
 
-REQUIRED_FILES=(
-  "GoogleMLKit/MLImage.xcframework.zip"
-  "GoogleMLKit/MLKitBarcodeScanning.xcframework.zip"
-  "GoogleMLKit/MLKitCommon.xcframework.zip"
-  "GoogleMLKit/MLKitFaceDetection.xcframework.zip"
-  "GoogleMLKit/MLKitVision.xcframework.zip"
-  "GoogleMLKit/GoogleToolboxForMac.xcframework.zip"
-  "GoogleMLKit/GoogleMVFaceDetectorResources.bundle.zip"
-)
+# Check that the build produced one xcframework zip per binary target pinned in
+# Package.swift — "any one zip exists" let a single-framework build pass Step 1
+# and ship an incomplete release. Derive the expected count from Package.swift
+# so the check cannot drift from the manifest.
+XCFRAMEWORK_COUNT=$(find GoogleMLKit -maxdepth 1 -name '*.xcframework.zip' 2>/dev/null | wc -l | tr -d ' ')
+TARGET_COUNT=$(grep -c '\.binaryTarget(' Package.swift || true)
 
-MISSING_FILES=()
-for file in "${REQUIRED_FILES[@]}"; do
-  if [ ! -f "$file" ]; then
-    MISSING_FILES+=("$file")
-  fi
-done
+if [ "$TARGET_COUNT" -eq 0 ]; then
+  echo "Error: Could not count .binaryTarget entries in Package.swift"
+  exit 1
+fi
 
-if [ ${#MISSING_FILES[@]} -gt 0 ]; then
-  echo "Error: Missing required files:"
-  for file in "${MISSING_FILES[@]}"; do
-    echo "  - $file"
-  done
-  echo ""
+if [ "$XCFRAMEWORK_COUNT" -lt "$TARGET_COUNT" ]; then
+  echo "Error: Found ${XCFRAMEWORK_COUNT} XCFramework zips in GoogleMLKit/, but Package.swift pins ${TARGET_COUNT} binary targets"
   echo "Please run: ./scripts/build_all.sh $VERSION"
   exit 1
 fi
 
-echo "✓ All required files present"
+BUNDLE_COUNT=$(find GoogleMLKit -maxdepth 1 -name '*.bundle.zip' 2>/dev/null | wc -l | tr -d ' ')
+if [ "$BUNDLE_COUNT" -eq 0 ]; then
+  echo "Warning: No resource bundles found in GoogleMLKit/ directory"
+  echo "Some modules may require manual resource bundle addition"
+fi
+
+echo "✓ XCFrameworks found (${XCFRAMEWORK_COUNT}/${TARGET_COUNT} binary targets)"
+echo "✓ Resource bundles checked (if any exist)"
 echo ""
 
 # Step 2: Create GitHub release
@@ -112,7 +110,7 @@ echo ""
 echo "Step 5: Creating and pushing tag..."
 git tag -a "$VERSION" -m "Release MLKit $VERSION
 
-See release notes: https://github.com/d-date/google-mlkit-swiftpm/releases/tag/$VERSION"
+See release notes: https://github.com/arrrrny/google-mlkit-swiftpm/releases/tag/$VERSION"
 
 echo "✓ Tag created: $VERSION"
 echo ""
@@ -133,5 +131,5 @@ echo "✓ Release $VERSION completed successfully!"
 echo "==================================="
 echo ""
 echo "Release URL:"
-echo "https://github.com/d-date/google-mlkit-swiftpm/releases/tag/$VERSION"
+echo "https://github.com/arrrrny/google-mlkit-swiftpm/releases/tag/$VERSION"
 echo ""

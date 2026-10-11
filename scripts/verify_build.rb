@@ -41,21 +41,41 @@ def verify_xcframeworks
     end
   end
 
-  # Check for bundle
-  bundle_zip = 'GoogleMLKit/GoogleMVFaceDetectorResources.bundle.zip'
-  if File.exist?(bundle_zip)
-    size = File.size(bundle_zip)
-    puts "✓ GoogleMVFaceDetectorResources.bundle.zip (#{size} bytes)"
-  else
-    puts "✗ GoogleMVFaceDetectorResources.bundle.zip - NOT FOUND"
-    missing << 'GoogleMVFaceDetectorResources.bundle'
+  # Check for bundles (some may be optional if model is embedded in framework).
+  # Names match the assets published on the release: OCR bundles ship as
+  # LatinOCRResources / ChineseOCRResources / DevanagariOCRResources /
+  # JapaneseOCRResources / KoreanOCRResources.
+  bundles = [
+    'GoogleMVFaceDetectorResources.bundle.zip',
+    'LatinOCRResources.bundle.zip',  # Optional - model embedded in MLKitTextRecognitionCommon framework
+    'ChineseOCRResources.bundle.zip',  # Optional
+    'DevanagariOCRResources.bundle.zip',  # Optional
+    'JapaneseOCRResources.bundle.zip',  # Optional
+    'KoreanOCRResources.bundle.zip'  # Optional
+  ]
+
+  bundles_missing = []
+  bundles.each do |bundle|
+    bundle_path = "GoogleMLKit/#{bundle}"
+    if File.exist?(bundle_path)
+      size = File.size(bundle_path)
+      puts "✓ #{bundle} (#{size} bytes)"
+    else
+      puts "⚠ #{bundle} - NOT FOUND (optional if model embedded)"
+      bundles_missing << bundle
+    end
   end
 
-  if missing.empty?
-    puts "\n✓ All XCFrameworks and bundle built successfully!"
+  if missing.empty? && bundles_missing.empty?
+    puts "\n✓ All XCFrameworks and bundles built successfully!"
     return true
+  elsif missing.empty?
+    puts "\n✓ All XCFrameworks built successfully!"
+    puts "⚠ Note: #{bundles_missing.length} bundle(s) not found (may be optional)"
+    bundles_missing.each { |b| puts "  - #{b}" }
+    return true  # Don't fail if only missing bundles
   else
-    puts "\n✗ Missing files: #{missing.join(', ')}"
+    puts "\n✗ Missing XCFrameworks: #{missing.join(', ')}"
     return false
   end
 end

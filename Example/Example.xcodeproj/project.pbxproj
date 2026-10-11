@@ -35,6 +35,7 @@
 				MLKitImageLabelingResources.bundle,
 				MLKitObjectDetectionCommonResources.bundle,
 				MLKitObjectDetectionResources.bundle,
+				MLKitTextRecognitionResources.bundle,
 				MLKitTranslate_resource.bundle,
 				MLKitXenoResources.bundle,
 				PredictOnDevice_resource.bundle,
@@ -137,6 +138,9 @@
 				Base,
 			);
 			mainGroup = D55A93372899396100177BD8;
+			packageReferences = (
+				166DAAEA2FEC35140056D715 /* XCLocalSwiftPackageReference "Package" */,
+			);
 			productRefGroup = D55A93412899396100177BD8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -313,7 +317,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
@@ -322,7 +326,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.d-date.mlkit-swiftpm-example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arrrrny.mlkit-swiftpm-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -361,7 +365,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
@@ -370,7 +374,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.d-date.mlkit-swiftpm-example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arrrrny.mlkit-swiftpm-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -404,6 +408,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		166DAAEA2FEC35140056D715 /* XCLocalSwiftPackageReference "Package" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		D5F799252EEE7D380092B26F /* Camera */ = {

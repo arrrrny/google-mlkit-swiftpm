@@ -63,7 +63,7 @@ let package = Package(
     .package(url: "https://github.com/google/GoogleDataTransport.git", exact: "10.1.0"),
     .package(url: "https://github.com/google/GoogleUtilities.git", "8.1.0" ..< "9.0.0"),
     .package(url: "https://github.com/google/gtm-session-fetcher.git", exact: "3.5.0"),
-    .package(url: "https://github.com/firebase/nanopb.git", exact: "2.30910.0"),
+    .package(url: "https://github.com/firebase/nanopb.git", "2.30910.0" ..< "2.30911.0"),
   ],
   targets: [
     .binaryTarget(
